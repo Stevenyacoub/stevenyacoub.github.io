@@ -129,6 +129,28 @@
             transform: translateX(-50%) translateY(4px);
         }
 
+        .featured-project {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.85rem;
+            letter-spacing: 0.5px;
+            transition: color 0.4s ease;
+        }
+        .featured-project span {
+            font-weight: 900;
+            text-transform: uppercase;
+            color: var(--accent-color);
+        }
+        .featured-project a {
+            color: var(--accent-color);
+            text-decoration: underline;
+            transition: color 0.4s ease;
+        }
+        .featured-project a:hover {
+            color: var(--accent-light);
+        }
+
         .location { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.85rem; transition: color 0.4s ease; }
 
         .contact-links { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 0.95rem; }
@@ -282,6 +304,10 @@
             <audio id="portraitSound" src="assets/portrait-sound.mp3" preload="auto"></audio>
             <audio id="portraitShockSound" src="assets/portrait-shock-sound.wav" preload="auto"></audio>
 
+            <div class="featured-project">
+                <span>FEATURED PROJECTS:</span> Check out my <a href="pathfinding.html">A* Pathfinding</a> and <a href="rass.html">RassEngine</a> pages for examples of my C++ skills!
+            </div>
+
             <div class="location">Redmond, WA</div>
             
             <div class="contact-links">
@@ -310,10 +336,11 @@
                     <div class="tile-content">
                         <div class="tile-inner-top">
                             <div class="tile-tag">Shipped Title</div>
-                            <h3></h3>
 							<h3>Novaxandria Vol. 1</h3>
-							<h3></h3>
-							<h3></h3>
+                            <div class="fe-skills-row" style="margin-top: 0; margin-bottom: 1rem;">
+                                <span class="fe-skill-badge" title="Unity"><img src="assets/icon-unity.png" alt="Unity"></span>
+                                <span class="fe-skill-badge" title="C#"><img src="assets/icon-csharp.png" alt="C#"></span>
+                            </div>
                             <div class="tile-role">Lead Software Engineer, Producer, Game Design</div>
                             <p>Turn-Based Strategy/Visual Novel featuring chess-based movement patterns, a rich combat skill system, and complex enemy behaviors.</p>
                         </div>
@@ -330,12 +357,12 @@
                     <div class="tile-content">
                         <div class="tile-inner-top">
                             <div class="tile-tag">In-Development</div>
-                            <h3></h3>
 							<h3>WaxHeart</h3>
-                            <h3></h3>
-							<h3></h3>
+                            <div class="fe-skills-row" style="margin-top: 0; margin-bottom: 1rem;">
+                                <span class="fe-skill-badge" title="Unity"><img src="assets/icon-unity.png" alt="Unity"></span>
+                                <span class="fe-skill-badge" title="C#"><img src="assets/icon-csharp.png" alt="C#"></span>
+                            </div>
 							<div class="tile-role">Unity Gameplay Engineer, Producer</div>
-							<h3></h3>
                             <p>3D atmospheric horror platformer featuring bespoke light-based stealth gameplay. Primarily engineered enemy behaviors and features for major boss encounters.</p>
                         </div>
                         <div class="tile-footer">
@@ -351,10 +378,12 @@
                     <div class="tile-content">
                         <div class="tile-inner-top">
                             <div class="tile-tag">Shipped Title</div>
-                            <h3></h3>
 							<h3>Kit & Krysta: Krysta's Big Decision</h3>
+                            <div class="fe-skills-row" style="margin-top: 0; margin-bottom: 1rem;">
+                                <span class="fe-skill-badge" title="Unity"><img src="assets/icon-unity.png" alt="Unity"></span>
+                                <span class="fe-skill-badge" title="C#"><img src="assets/icon-csharp.png" alt="C#"></span>
+                            </div>
                             <div class="tile-role">Lead Programmer, Artist</div>
-							<h3></h3>
                             <p>Engineered dynamic dialogue systems, decision trees, and cross-platform builds alongside pixel art creation.</p>
                         </div>
                         <div class="tile-footer">
@@ -375,10 +404,10 @@
                     <div class="tile-content">
                         <div class="tile-inner-top">
                             <div class="tile-tag">Custom Engine & Shipped Title</div>
-                            <h3></h3>
 							<h3>Rass + RassEngine</h3>
-                            <h3></h3>
-                            <h3></h3>
+                            <div class="fe-skills-row" style="margin-top: 0; margin-bottom: 1rem;">
+                                <span class="fe-skill-badge" title="C++"><img src="assets/icon-cpp.png" alt="C++"></span>
+                            </div>
 							<div class="tile-role">Gameplay and Engine Programmer, Game Designer</div>
                             <p>Custom C++ engine and game team project featuring smooth action-platforming and puzzling gameplay. Architected core engine systems and major gameplay features.</p>
                         </div>
@@ -395,12 +424,11 @@
                     <div class="tile-content">
                         <div class="tile-inner-top">
                             <div class="tile-tag">Research Project</div>
-                            <h3></h3>
 							<h3>A* Pathfinding Project</h3>
-                            <h3></h3>
-                            <h3></h3>
+                            <div class="fe-skills-row" style="margin-top: 0; margin-bottom: 1rem;">
+                                <span class="fe-skill-badge" title="C++"><img src="assets/icon-cpp.png" alt="C++"></span>
+                            </div>
 							<div class="tile-role">Sub-5ms Execution Optimization</div>
-                            <h3></h3>
 							<p>Custom search optimized for massive grid maps, clocking sub-5ms execution times. Broke a university record and won the class competition.</p>
                         </div>
                         <div class="tile-footer">
@@ -416,12 +444,12 @@
                     <div class="tile-content">
                         <div class="tile-inner-top">
                             <div class="tile-tag">Research Project</div>
-                            <h3></h3>
 							<h3>HTN Planning Project</h3>
-                            <h3></h3>
-                            <h3></h3>
+                            <div class="fe-skills-row" style="margin-top: 0; margin-bottom: 1rem;">
+                                <span class="fe-skill-badge" title="Unity"><img src="assets/icon-unity.png" alt="Unity"></span>
+                                <span class="fe-skill-badge" title="C#"><img src="assets/icon-csharp.png" alt="C#"></span>
+                            </div>
 							<div class="tile-role">Hierarchical Task Network Logic</div>
-                            <h3></h3>
 							<p>Hierarchical Task Network implementation powering complex, intelligent decision-making logic for game agents.</p>
                         </div>
                         <div class="tile-footer">
