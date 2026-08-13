@@ -1,254 +1,557 @@
-<!DOCTYPE HTML>
-<!--
-	Phantom by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Steven Yacoub</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
-		<!-- Wrapper -->
-			<div id="wrapper">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steven Yacoub | Gameplay & AI Programmer</title>
+    <style>
+        @font-face {
+            font-family: 'Nocturne Seriff';
+            src: url('assets/webfonts/NocturneSerif-Regular.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
 
-				<!-- Header -->
-					<header id="header">
-						<div class="inner">
+        :root {
+            --bg-color: #BEF1D8;
+            --card-bg: #93E9BE;
+            --accent-color: #3b5c4b;
+            --accent-light: #23382c;
+            --accent-dark: #588B72;
+            --text-main: #1b3328;
+            --text-muted: #2c4a3b;
+            --border-color: #588B72;
+        }
 
-							<!-- Logo -->
-								<a href="index.html" class="logo">
-									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">tuskoub</span>
-								</a>
+        body.nes-theme {
+            --bg-color: #1c1c1e;
+            --card-bg: #2a2a2d;
+            --accent-color: #9e2a2b;
+            --accent-light: #c24143;
+            --accent-dark: #631718;
+            --text-main: #f5f5f5;
+            --text-muted: #d1d1d6;
+            --border-color: #4a4a4f;
+        }
 
-							<!-- Nav -->
-								<nav>
-									<ul>
-										<li><a href="#menu">Menu</a></li>
-									</ul>
-								</nav>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nocturne Seriff', sans-serif !important; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; padding: 3rem 1rem; transition: background-color 0.4s ease, color 0.4s ease; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        
+        header { text-align: center; margin-bottom: 3.5rem; }
+        h1 { font-size: 3rem; color: var(--text-main); margin-bottom: 0.5rem; letter-spacing: -0.5px; transition: color 0.4s ease; }
+        .subtitle { font-size: 1.3rem; color: var(--accent-color); margin-bottom: 1.5rem; font-weight: 500; transition: color 0.4s ease; }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            max-width: 850px;
+            margin: 0 auto 1.5rem auto;
+            flex-wrap: wrap;
+        }
+        .bio {
+            flex: 1;
+            min-width: 280px;
+            text-align: left;
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin: 0;
+            transition: color 0.4s ease;
+        }
+        
+        .portrait-wrapper {
+            position: relative;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .portrait-frame {
+            width: 175px;
+            height: 175px;
+            background-color: var(--card-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(88, 139, 114, 0.2);
+            cursor: pointer;
+            transition: border-color 0.4s ease, background-color 0.4s ease;
+        }
+        .portrait-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: pixelated;
+            transition: opacity 0.15s ease;
+        }
+        
+        .portrait-frame .portrait-smile,
+        .portrait-frame .portrait-shock {
+            display: none;
+        }
+        .portrait-frame:hover .portrait-default {
+            display: none;
+        }
+        .portrait-frame.is-smiling:hover .portrait-smile {
+            display: block;
+        }
+        .portrait-frame.is-shocked:hover .portrait-shock {
+            display: block;
+        }
 
-						</div>
-					</header>
+        .portrait-tooltip {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease, background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+            pointer-events: none;
+            box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+        .portrait-tooltip.show-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(4px);
+        }
 
-				<!-- Menu -->
-					<nav id="menu">
-						<h2>Menu</h2>
-						<ul>
-							<li><a href="index.html">Home</a></li>
-							<li><a href="">About (Under Construction)</a></li>
-							<li><a href="">Programming Projects (Under Construction)</a></li>
-							<li><a href="">Experience and Skills (Under Construction)</a></li>
-						</ul>
-					</nav>
+        .location { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.85rem; transition: color 0.4s ease; }
 
-				<!-- Main -->
-					<div id="main">
-						<div class="inner">
-							<header>
-								<h1>Steven Yacoub<br />
-								- Gameplay Programmer -</h1>
-								<p>AKA Tuskoub, I program games and other various computer science projects. I also have experience mentoring and teaching people how to code. Currently this site serves as a visual portfolio of all the video games whose development I've been a part of during my college experience and after. Click on any of the windows below to see more details about each game.
-								<br></br>This website will be built out with other not-game-dev Computer Science projects and personal information as well in the near future.
-								<i>You can also find links to all my socials on the bottom of any given page.</i></p>
-								
-							</header>
-													
-																					<h1><u>Games I've Worked On</u></h1>
-																					<h2><i>Check out WaxHeart! The project I'm currently active on!</i></h2>
-								
-							<section class="tiles">
-<article class="style4">
-									<span class="image">
-										<img src="images/pic19.jpg" alt="" />
-									</span>
-									<a href="bigdecision.html">
-										<h2>Kit & Krysta: Krysta's Big Decision</h2>
-										<div class="content">
-											<p>A bite-sized, Famicom-inspired visual novel developed as a birthday gift for and in collaboration with podcast superstars of former Nintendo fame, Kit & Krysta!</p>
-										</div>
-									</a>
-								</article>
-								<article class="style5">
-									<span class="image">
-										<img src="images/pic18.jpg" alt="" />
-									</span>
-									<a href="waxheart.html">
-										<h2>WaxHeart</h2>
-										<div class="content">
-											<p>In-Development: An atmospheric-horror 3D Platformer centered around the WaxChild, a foretold figure who must employ their burning light to solve puzzles and traverse haunting levels.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style6">
-									<span class="image">
-										<img src="images/pic17.jpg" alt="" />
-									</span>
-									<a href="hearthattack.html">
-										<h2>Hearth Attack</h2>
-										<div class="content">
-											<p>Developed during a 48-hour Game Jam hosted for the developers of WaxHeart. An avoid-em-up arcade-type experience where you, a virus, must infiltrate a mechanical Heart while avoiding its natural defenses.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style1">
-									<span class="image">
-										<img src="images/pic16.jpg" alt="" />
-									</span>
-									<a href="hampage.html">
-										<h2>Hampage</h2>
-										<div class="content">
-											<p>A 3D Action-Platformer starring a lance-wielding hamster knight. Developed as a University Senior Project. Demo available!</p>
-										</div>
-									</a>
-								</article>
-								<article class="style2">
-									<span class="image">
-										<img src="images/pic02.jpg" alt="" />
-									</span>
-									<a href="faceme.html">
-										<h2>Face Me</h2>
-										<div class="content">
-											<p>Art Gallery Game to show off a Graduate-Level Sculpture Project</p>
-										</div>
-									</a>
-								</article>
-								<article class="style3">
-									<span class="image">
-										<img src="images/pic05.jpg" alt="" />
-									</span>
-									<a href="pumpkindash.html">
-										<h2>Pumpkin Dash</h2>
-										<div class="content">
-											<p>Final Project for a Summer 2020 Unity Class. A 3D Auto-Runner with a spooky theme.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style4">
-									<span class="image">
-										<img src="images/pic03.jpg" alt="" />
-									</span>
-									<a href="clover.html">
-										<h2>Clover</h2>
-										<div class="content">
-											<p>An electro-swing rhythm game about a girl named Kel and three ghosts. Developed as a student project.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style5">
-									<span class="image">
-										<img src="images/pic04.jpg" alt="" />
-									</span>
-									<a href="vestariasaga1.html">
-										<h2>Vestaria Saga I: War of the Scions</h2>
-										<div class="content">
-											<p>QA Testing for an indie SRPG game developed by Shouzou Kaga, creator of Fire Emblem, and localized by DANGEN Entertainment.</p>
-										</div>
-									</a>
-								</article>
-								<!--
-								<article class="style2">
-									<span class="image">
-										<img src="images/pic07.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Ipsum</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style3">
-									<span class="image">
-										<img src="images/pic08.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Dolor</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style1">
-									<span class="image">
-										<img src="images/pic09.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Nullam</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style5">
-									<span class="image">
-										<img src="images/pic10.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Ultricies</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style6">
-									<span class="image">
-										<img src="images/pic11.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Dictum</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								<article class="style4">
-									<span class="image">
-										<img src="images/pic12.jpg" alt="" />
-									</span>
-									<a href="generic.html">
-										<h2>Pretium</h2>
-										<div class="content">
-											<p>Sed nisl arcu euismod sit amet nisi lorem etiam dolor veroeros et feugiat.</p>
-										</div>
-									</a>
-								</article>
-								-->
-							</section>
-						</div>
-					</div>
+        .contact-links { display: flex; justify-content: center; align-items: center; gap: 2rem; font-size: 0.95rem; }
+        .contact-item { position: relative; display: inline-flex; align-items: center; justify-content: center; color: var(--accent-color); text-decoration: none; padding: 0.3rem; transition: color 0.4s ease; }
+        .contact-item:hover { color: var(--accent-light); }
+        .icon { width: 28px; height: 28px; fill: currentColor; display: block; }
+        
+        .contact-label {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.25rem 0.65rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease, background-color 0.4s ease, border-color 0.4s ease;
+            pointer-events: none;
+            box-shadow: 0 4px 8px -1px rgba(0, 0, 0, 0.15);
+        }
+        .contact-item:hover .contact-label {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(4px);
+        }
 
-				<!-- Footer -->
-					<footer id="footer">
-						<div class="inner">
-							<section>
-								<h2>Follow</h2>
-								<ul class="icons">
-									<li><a href="https://twitter.com/TUSK0UB" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="https://www.instagram.com/seiken.reeve/?hl=en" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="https://github.com/Stevenyacoub" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-									<li><a href="https://www.backloggd.com/u/tuskoub/" class="fa fa-gamepad"></a></li>
-									<li><a href="https://www.linkedin.com/in/steven-yacoub-640350164/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
-								</ul>
-							</section>
-							<ul class="copyright">
-								<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-							</ul>
-						</div>
-					</footer>
+        h2 { font-size: 1.5rem; color: var(--text-main); margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; transition: border-color 0.4s ease, color 0.4s ease; }
+        .section-group { margin-bottom: 3.5rem; }
 
-			</div>
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.75rem; }
+        .tile { 
+            background-color: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 12px; 
+            overflow: hidden; 
+            text-decoration: none; 
+            color: inherit; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            height: 100%; 
+            transition: transform 0.25s ease, border-color 0.4s ease, box-shadow 0.25s ease, background-color 0.4s ease; 
+            position: relative; 
+        }
+        .tile:hover { transform: translateY(-5px); border-color: var(--accent-light); box-shadow: 0 10px 25px -5px rgba(59, 92, 75, 0.2); }
+        
+        .tile-image-container { width: 100%; height: 260px; background-color: var(--accent-dark); overflow: hidden; border-bottom: 1px solid var(--border-color); position: relative; transition: background-color 0.4s ease, border-color 0.4s ease; flex-shrink: 0; }
+        .tile-image-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .tile:hover .tile-image-container img { transform: scale(1.03); }
+        
+        .tile-content { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .tile-inner-top { display: flex; flex-direction: column; }
+        
+        .tile h3 { 
+            font-size: 1.25rem; 
+            color: var(--text-main); 
+            margin-bottom: 0.8rem; 
+            line-height: 1.4; 
+            transition: color 0.4s ease;
+        }
+        .tile-role { 
+            font-size: 0.85rem; 
+            color: var(--accent-color); 
+            font-weight: 600; 
+            margin-bottom: 1.1rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+            line-height: 1.4;
+            transition: color 0.4s ease; 
+        }
+        .tile p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.25rem; transition: color 0.4s ease; }
+        .tile-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .tile-tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-main); background: rgba(58, 92, 75, 0.15); padding: 0.25rem 0.5rem; border-radius: 4px; font-weight: 700; transition: color 0.4s ease, background-color 0.4s ease; }
+        .tile-link-text { color: var(--accent-color); font-size: 0.85rem; font-weight: 600; transition: color 0.4s ease; }
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+        .skills-container { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-bottom: 3rem; transition: background-color 0.4s ease, border-color 0.4s ease; }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; align-items: stretch; }
+        
+        .skills-group { 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            background: rgba(255, 255, 255, 0.15); 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            padding: 1.25rem; 
+            transition: border-color 0.4s ease, background-color 0.4s ease; 
+        }
+        .skills-group h4 { color: var(--accent-color); margin-bottom: 0.5rem; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.4s ease; }
+        .skills-group p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; transition: color 0.4s ease; }
 
-	</body>
+        .fe-skills-row {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-top: auto; 
+            flex-wrap: wrap;
+            padding-top: 0.5rem;
+        }
+        .fe-skill-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;  
+            height: 48px; 
+            background: var(--bg-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.4s ease, background-color 0.4s ease;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+        }
+        .fe-skill-badge:hover {
+            transform: scale(1.15);
+        }
+        .fe-skill-badge img {
+            width: 28px;  
+            height: 28px; 
+            object-fit: contain;
+            image-rendering: pixelated;
+        }
+
+        footer { text-align: center; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border-color); padding-top: 2rem; transition: color 0.4s ease, border-color 0.4s ease; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Steven Yacoub</h1>
+            <div class="subtitle">Gameplay & AI Programmer</div>
+            
+            <div class="header-content">
+                <div class="portrait-wrapper">
+                    <div class="portrait-frame is-smiling" id="portraitContainer">
+                        <img src="assets/portrait-timeskip.png" class="portrait-default">
+                        <img src="assets/portrait-timeskip-smile.png" class="portrait-smile">
+                        <img src="assets/portrait-timeskip-shock.png" class="portrait-shock">
+                    </div>
+                    <div class="portrait-tooltip" id="portraitTooltip">try turning the volume up!</div>
+                    <div class="portrait-tooltip" id="shockTooltip">you found 1 of 2 secrets! this site is hiding another! (Hint: a famous code)</div>
+                </div>
+				<p class="bio">I'm Steven! A Gameplay and Artificial Intelligence engineer specializing in high-performance C++ architecture, custom engine development, and advanced enemy/NPC systems. I'm driven by a philosophy to craft game features in ways that players will be surprised by and to build systems that empower designers to deliver fun!</p>
+            </div>
+
+            <audio id="portraitSound" src="assets/portrait-sound.mp3" preload="auto"></audio>
+            <audio id="portraitShockSound" src="assets/portrait-shock-sound.wav" preload="auto"></audio>
+
+            <div class="location">Redmond, WA</div>
+            
+            <div class="contact-links">
+                <a href="mailto:yacoubsteven@gmail.com" class="contact-item">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span class="contact-label">Email</span>
+                </a>
+                <a href="https://linkedin.com/in/steven-yacoub-640350164" target="_blank" class="contact-item">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.32a1.59 1.59 0 0 0-1.59 1.59c0 .88.71 1.59 1.59 1.59s1.59-.71 1.59-1.59c0-.88-.71-1.59-1.59-1.59z"/></svg>
+                    <span class="contact-label">LinkedIn</span>
+                </a>
+                <a href="https://github.com/Stevenyacoub" target="_blank" class="contact-item">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>
+                    <span class="contact-label">GitHub</span>
+                </a>
+            </div>
+        </header>
+
+        <section class="section-group">
+            <h2>Professional, Credited, Game Titles</h2>
+            <div class="grid">
+                <a href="novaxandria.html" class="tile">
+                    <div class="tile-image-container">
+                        <img src="assets/novaxandria.jpg" alt="Novaxandria Vol. 1 Preview">
+                    </div>
+                    <div class="tile-content">
+                        <div class="tile-inner-top">
+                            <div class="tile-tag">Shipped Title</div>
+                            <h3></h3>
+							<h3>Novaxandria Vol. 1</h3>
+							<h3></h3>
+							<h3></h3>
+                            <div class="tile-role">Lead Software Engineer, Producer, Game Design</div>
+                            <p>Turn-Based Strategy/Visual Novel featuring chess-based movement patterns, a rich combat skill system, and complex enemy behaviors.</p>
+                        </div>
+                        <div class="tile-footer">
+                            <span class="tile-link-text">View Development Details &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="waxheart.html" class="tile">
+                    <div class="tile-image-container">
+                        <img src="assets/waxheart.jpg" alt="WaxHeart Preview">
+                    </div>
+                    <div class="tile-content">
+                        <div class="tile-inner-top">
+                            <div class="tile-tag">In-Development</div>
+                            <h3></h3>
+							<h3>WaxHeart</h3>
+                            <h3></h3>
+							<h3></h3>
+							<div class="tile-role">Unity Gameplay Engineer, Producer</div>
+							<h3></h3>
+                            <p>3D atmospheric horror platformer featuring bespoke light-based stealth gameplay. Primarily engineered enemy behaviors and features for major boss encounters.</p>
+                        </div>
+                        <div class="tile-footer">
+                            <span class="tile-link-text">View Development Details &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="kit-krysta.html" class="tile">
+                    <div class="tile-image-container">
+                        <img src="assets/kitkrysta.jpg" alt="Kit & Krysta Preview">
+                    </div>
+                    <div class="tile-content">
+                        <div class="tile-inner-top">
+                            <div class="tile-tag">Shipped Title</div>
+                            <h3></h3>
+							<h3>Kit & Krysta: Krysta's Big Decision</h3>
+                            <div class="tile-role">Lead Programmer, Artist</div>
+							<h3></h3>
+                            <p>Engineered dynamic dialogue systems, decision trees, and cross-platform builds alongside pixel art creation.</p>
+                        </div>
+                        <div class="tile-footer">
+                            <span class="tile-link-text">View Development Details &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="section-group">
+            <h2>Programming, Academic & Tech Projects</h2>
+            <div class="grid">
+                <a href="rass.html" class="tile">
+                    <div class="tile-image-container">
+                        <img src="assets/rass.jpg" alt="RassEngine Preview">
+                    </div>
+                    <div class="tile-content">
+                        <div class="tile-inner-top">
+                            <div class="tile-tag">Custom Engine & Shipped Title</div>
+                            <h3></h3>
+							<h3>Rass + RassEngine</h3>
+                            <h3></h3>
+                            <h3></h3>
+							<div class="tile-role">Gameplay and Engine Programmer, Game Designer</div>
+                            <p>Custom C++ engine and game team project featuring smooth action-platforming and puzzling gameplay. Architected core engine systems and major gameplay features.</p>
+                        </div>
+                        <div class="tile-footer">
+                            <span class="tile-link-text">View Development Details &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="pathfinding.html" class="tile">
+                    <div class="tile-image-container">
+                        <img src="assets/pathfinding.jpg" alt="A* Pathfinding Preview">
+                    </div>
+                    <div class="tile-content">
+                        <div class="tile-inner-top">
+                            <div class="tile-tag">Research Project</div>
+                            <h3></h3>
+							<h3>A* Pathfinding Project</h3>
+                            <h3></h3>
+                            <h3></h3>
+							<div class="tile-role">Sub-5ms Execution Optimization</div>
+                            <h3></h3>
+							<p>Custom search optimized for massive grid maps, clocking sub-5ms execution times. Broke a university record and won the class competition.</p>
+                        </div>
+                        <div class="tile-footer">
+                            <span class="tile-link-text">View Development Details &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="htn-planning.html" class="tile">
+                    <div class="tile-image-container">
+                        <img src="assets/htn.jpg" alt="HTN Planning Preview">
+                    </div>
+                    <div class="tile-content">
+                        <div class="tile-inner-top">
+                            <div class="tile-tag">Research Project</div>
+                            <h3></h3>
+							<h3>HTN Planning Project</h3>
+                            <h3></h3>
+                            <h3></h3>
+							<div class="tile-role">Hierarchical Task Network Logic</div>
+                            <h3></h3>
+							<p>Hierarchical Task Network implementation powering complex, intelligent decision-making logic for game agents.</p>
+                        </div>
+                        <div class="tile-footer">
+                            <span class="tile-link-text">View Development Details &rarr;</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section>
+            <div class="skills-container">
+                <h2 style="border: none; margin-bottom: 1rem; padding: 0;">Technical Proficiencies</h2>
+                <div class="skills-grid">
+                    <div class="skills-group">
+                        <div>
+                            <h4>Programming Languages</h4>
+                            <p>C++, C#, Java</p>
+                        </div>
+                        <div class="fe-skills-row">
+                            <span class="fe-skill-badge" title="C++"><img src="assets/icon-cpp.png" alt="C++"></span>
+                            <span class="fe-skill-badge" title="C#"><img src="assets/icon-csharp.png" alt="C#"></span>
+                            <span class="fe-skill-badge" title="Java"><img src="assets/icon-java.png" alt="Java"></span>
+                        </div>
+                    </div>
+                    <div class="skills-group">
+                        <div>
+                            <h4>Engines & Tools</h4>
+                            <p>Custom C++ Engines, Unreal Engine 5, Unity, Git, Visual Studio, Jira</p>
+                        </div>
+                        <div class="fe-skills-row">
+                            <span class="fe-skill-badge" title="Unity"><img src="assets/icon-unity.png" alt="Unity"></span>
+                            <span class="fe-skill-badge" title="Unreal Engine"><img src="assets/icon-unreal.png" alt="Unreal"></span>
+                            <span class="fe-skill-badge" title="Git / GitHub"><img src="assets/icon-github.png" alt="GitHub"></span>
+                        </div>
+                    </div>
+                    <div class="skills-group">
+                        <div>
+                            <h4>Specialization</h4>
+                            <p>Gameplay Systems, Computational AI, Pathfinding, Enemy/NPC Behaviors</p>
+                        </div>
+                    </div>
+                    <div class="skills-group">
+                        <div>
+                            <h4>Languages</h4>
+                            <p>English, Spanish (Fluent), Japanese (Beginner-Intermediate)</p>
+                        </div>
+                        <div class="fe-skills-row"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Steven Yacoub.</p>
+        </footer>
+    </div>
+
+    <script>
+        const portrait = document.getElementById('portraitContainer');
+        const portraitTooltip = document.getElementById('portraitTooltip');
+        const shockTooltip = document.getElementById('shockTooltip');
+        const sound = document.getElementById('portraitSound');
+        const shockSound = document.getElementById('portraitShockSound');
+        
+        let hasHoveredPortrait = false;
+        let hasHoveredShock = false;
+        let tooltipTimeout = null;
+
+        portrait.addEventListener('mouseenter', () => {
+            const roll = Math.random();
+            
+            if (tooltipTimeout) {
+                clearTimeout(tooltipTimeout);
+                portraitTooltip.classList.remove('show-tooltip');
+                shockTooltip.classList.remove('show-tooltip');
+            }
+
+            if (roll < 0.25) {
+                portrait.classList.remove('is-smiling');
+                portrait.classList.add('is-shocked');
+                shockSound.currentTime = 0;
+                shockSound.play().catch(e => console.log("Audio prevented:", e));
+
+                if (!hasHoveredShock) {
+                    hasHoveredShock = true;
+                    hasHoveredPortrait = true; 
+                    
+                    shockTooltip.classList.add('show-tooltip');
+
+                    tooltipTimeout = setTimeout(() => {
+                        shockTooltip.classList.remove('show-tooltip');
+                    }, 4000);
+                }
+            } else {
+                portrait.classList.remove('is-shocked');
+                portrait.classList.add('is-smiling');
+                sound.currentTime = 0;
+                sound.play().catch(e => console.log("Audio prevented:", e));
+
+                if (!hasHoveredPortrait) {
+                    hasHoveredPortrait = true;
+                    portraitTooltip.classList.add('show-tooltip');
+
+                    tooltipTimeout = setTimeout(() => {
+                        portraitTooltip.classList.remove('show-tooltip');
+                    }, 4000);
+                }
+            }
+        });
+
+        portrait.addEventListener('mouseleave', () => {
+            portrait.classList.remove('is-smiling', 'is-shocked');
+        });
+
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA'];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            const expectedKey = konamiCode[konamiIndex];
+            if (e.code === expectedKey || e.key.toLowerCase() === expectedKey.toLowerCase()) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    document.body.classList.toggle('nes-theme');
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+    </script>
+</body>
 </html>
